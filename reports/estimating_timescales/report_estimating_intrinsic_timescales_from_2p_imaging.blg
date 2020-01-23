@@ -1,0 +1,15 @@
+[0] Config.pm:304> INFO - This is Biber 2.12
+[0] Config.pm:307> INFO - Logfile is 'report_estimating_intrinsic_timescales_from_2p_imaging.blg'
+[23] biber:315> INFO - === Mon Jul 29, 2019, 23:25:51
+[42] Biber.pm:371> INFO - Reading 'report_estimating_intrinsic_timescales_from_2p_imaging.bcf'
+[97] Biber.pm:889> INFO - Found 6 citekeys in bib section 0
+[108] Biber.pm:4093> INFO - Processing section 0
+[117] Biber.pm:4254> INFO - Looking for bibtex format file 'Neuroscience.bib' for section 0
+[144] bibtex.pm:1512> INFO - LaTeX decoding ...
+[670] bibtex.pm:1329> INFO - Found BibTeX data source 'Neuroscience.bib'
+[753] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[753] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[753] Biber.pm:3921> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'en-US'
+[753] Biber.pm:3927> INFO - No sort tailoring available for locale 'en-US'
+[761] bbl.pm:636> INFO - Writing 'report_estimating_intrinsic_timescales_from_2p_imaging.bbl' with encoding 'UTF-8'
+[766] bbl.pm:739> INFO - Output to report_estimating_intrinsic_timescales_from_2p_imaging.bbl

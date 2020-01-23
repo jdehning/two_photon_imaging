@@ -1,0 +1,433 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.0 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global}
+    \entry{chen_ultrasensitive_2013}{article}{}
+      \name{author}{13}{}{%
+        {{hash=06f93e8474feec9dd6a801302817003d}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={Tsai-Wen},
+           giveni={T\bibinithyphendelim W\bibinitperiod}}}%
+        {{hash=8ecf964ba891f13371aad260d51bd0e7}{%
+           family={Wardill},
+           familyi={W\bibinitperiod},
+           given={Trevor\bibnamedelima J.},
+           giveni={T\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=4ecf6f19fcc21ef32abbea3a7f2a885c}{%
+           family={Sun},
+           familyi={S\bibinitperiod},
+           given={Yi},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=b3f95791e2590375ea3f4025ffc71a51}{%
+           family={Pulver},
+           familyi={P\bibinitperiod},
+           given={Stefan\bibnamedelima R.},
+           giveni={S\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+        {{hash=958cd3da6965e4f26e72aa16c9d6536a}{%
+           family={Renninger},
+           familyi={R\bibinitperiod},
+           given={Sabine\bibnamedelima L.},
+           giveni={S\bibinitperiod\bibinitdelim L\bibinitperiod}}}%
+        {{hash=1c1e4f8288e51cf435bc258e30acdb61}{%
+           family={Baohan},
+           familyi={B\bibinitperiod},
+           given={Amy},
+           giveni={A\bibinitperiod}}}%
+        {{hash=aee72882b6417e9f10bb025e3ae42da0}{%
+           family={Schreiter},
+           familyi={S\bibinitperiod},
+           given={Eric\bibnamedelima R.},
+           giveni={E\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+        {{hash=9a7417d6c3d7bd1c55f76613f65d2967}{%
+           family={Kerr},
+           familyi={K\bibinitperiod},
+           given={Rex\bibnamedelima A.},
+           giveni={R\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=28ba624f69e5e47d8ad31f04b8fc8af2}{%
+           family={Orger},
+           familyi={O\bibinitperiod},
+           given={Michael\bibnamedelima B.},
+           giveni={M\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
+        {{hash=3ef65fa6bd69cf17ae117dad07c03ce5}{%
+           family={Jayaraman},
+           familyi={J\bibinitperiod},
+           given={Vivek},
+           giveni={V\bibinitperiod}}}%
+        {{hash=395bd766172a6d46a3a328b3aa1f2b72}{%
+           family={Looger},
+           familyi={L\bibinitperiod},
+           given={Loren\bibnamedelima L.},
+           giveni={L\bibinitperiod\bibinitdelim L\bibinitperiod}}}%
+        {{hash=b2cbb31e2d44cbba758618ce79c34b22}{%
+           family={Svoboda},
+           familyi={S\bibinitperiod},
+           given={Karel},
+           giveni={K\bibinitperiod}}}%
+        {{hash=e69f6300ec382d1fcd580637123051b6}{%
+           family={Kim},
+           familyi={K\bibinitperiod},
+           given={Douglas\bibnamedelima S.},
+           giveni={D\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+      }
+      \strng{namehash}{e45a900a18c9c15416f333d9e2143c5b}
+      \strng{fullhash}{4dad23457f3f019607de0efeaeca167a}
+      \strng{bibnamehash}{e45a900a18c9c15416f333d9e2143c5b}
+      \strng{authorbibnamehash}{e45a900a18c9c15416f333d9e2143c5b}
+      \strng{authornamehash}{e45a900a18c9c15416f333d9e2143c5b}
+      \strng{authorfullhash}{4dad23457f3f019607de0efeaeca167a}
+      \field{sortinit}{1}
+      \field{sortinithash}{2174f786c6195e7fe2ee1c229b416e29}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Fluorescent calcium sensors are widely used to image neural activity. Using structure-based mutagenesis and neuron-based screening, we developed a family of ultrasensitive protein calcium sensors ({GCaMP}6) that outperformed other sensors in cultured neurons and in zebrafish, flies and mice in vivo. In layer 2/3 pyramidal neurons of the mouse visual cortex, {GCaMP}6 reliably detected single action potentials in neuronal somata and orientation-tuned synaptic calcium transients in individual dendritic spines. The orientation tuning of structurally persistent spines was largely stable over timescales of weeks. Orientation tuning averaged across spine populations predicted the tuning of their parent cell. Although the somata of {GABAergic} neurons showed little orientation tuning, their dendrites included highly tuned dendritic segments (5-40-µm long). {GCaMP}6 sensors thus provide new windows into the organization and dynamics of neural circuits over multiple spatial and temporal scales.}
+      \field{day}{18}
+      \field{issn}{1476-4687}
+      \field{journaltitle}{Nature}
+      \field{month}{7}
+      \field{number}{7458}
+      \field{shortjournal}{Nature}
+      \field{title}{Ultrasensitive fluorescent proteins for imaging neuronal activity}
+      \field{volume}{499}
+      \field{year}{2013}
+      \field{dateera}{ce}
+      \field{pages}{295\bibrangedash 300}
+      \range{pages}{6}
+      \verb{doi}
+      \verb 10.1038/nature12354
+      \endverb
+      \verb{file}
+      \verb Accepted Version:/home/jdehning/Zotero/storage/Y4PTWWVN/Chen et al. - 2013 - Ultrasensitive fluorescent proteins for imaging ne.pdf:application/pdf
+      \endverb
+      \keyw{Action Potentials,Animals,Calcium,Calcium-Binding Proteins,Cells,Cultured,Dendritic Spines,Fluorescent Dyes,{GABAergic} Neurons,Luminescent Proteins,Mice,Molecular Imaging,Mutagenesis,Protein Engineering,Pyramidal Cells,Visual Cortex}
+    \endentry
+    \entry{theis_benchmarking_2016}{article}{}
+      \name{author}{9}{}{%
+        {{hash=5314c7da92c0dd8f017ad76fc7a24e02}{%
+           family={Theis},
+           familyi={T\bibinitperiod},
+           given={Lucas},
+           giveni={L\bibinitperiod}}}%
+        {{hash=30f46bf5fd8b18adc9707a70cec598b6}{%
+           family={Berens},
+           familyi={B\bibinitperiod},
+           given={Philipp},
+           giveni={P\bibinitperiod}}}%
+        {{hash=09c03bd6f8f1a80d3d0a4002611151d7}{%
+           family={Froudarakis},
+           familyi={F\bibinitperiod},
+           given={Emmanouil},
+           giveni={E\bibinitperiod}}}%
+        {{hash=d01f5af482223c85d09f255ebd92a00b}{%
+           family={Reimer},
+           familyi={R\bibinitperiod},
+           given={Jacob},
+           giveni={J\bibinitperiod}}}%
+        {{hash=ad38254caa489500742e73dfc5647407}{%
+           family={Román\bibnamedelima Rosón},
+           familyi={R\bibinitperiod\bibinitdelim R\bibinitperiod},
+           given={Miroslav},
+           giveni={M\bibinitperiod}}}%
+        {{hash=3502c3b40a59d847e7d9723a01cc8230}{%
+           family={Baden},
+           familyi={B\bibinitperiod},
+           given={Tom},
+           giveni={T\bibinitperiod}}}%
+        {{hash=81e00b6d0cfcc83b3d496d8f4380586c}{%
+           family={Euler},
+           familyi={E\bibinitperiod},
+           given={Thomas},
+           giveni={T\bibinitperiod}}}%
+        {{hash=8213bad1e8bf3b5c935999adbeee152f}{%
+           family={Tolias},
+           familyi={T\bibinitperiod},
+           given={Andreas\bibnamedelima S.},
+           giveni={A\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+        {{hash=653ad8c2337d9615a186b743cc8d69a5}{%
+           family={Bethge},
+           familyi={B\bibinitperiod},
+           given={Matthias},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{0c15bce287f483d6b9e7820f6784a554}
+      \strng{fullhash}{899980700dfe941bd728636c257e38da}
+      \strng{bibnamehash}{0c15bce287f483d6b9e7820f6784a554}
+      \strng{authorbibnamehash}{0c15bce287f483d6b9e7820f6784a554}
+      \strng{authornamehash}{0c15bce287f483d6b9e7820f6784a554}
+      \strng{authorfullhash}{899980700dfe941bd728636c257e38da}
+      \field{sortinit}{1}
+      \field{sortinithash}{2174f786c6195e7fe2ee1c229b416e29}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Summary A fundamental challenge in calcium imaging has been to infer spike rates of neurons from the measured noisy fluorescence traces. We systematically evaluate different spike inference algorithms on a large benchmark dataset ({>}100,000 spikes) recorded from varying neural tissue (V1 and retina) using different calcium indicators ({OGB}-1 and {GCaMP}6). In addition, we introduce a new algorithm based on supervised learning in flexible probabilistic models and find that it performs better than other published techniques. Importantly, it outperforms other algorithms even when applied to entirely new datasets for which no simultaneously recorded data is available. Future data acquired in new experimental conditions can be used to further improve the spike prediction accuracy and generalization performance of the model. Finally, we show that comparing algorithms on artificial data is not informative about performance on real data, suggesting that benchmarking different methods with real-world datasets may greatly facilitate future algorithmic developments in neuroscience.}
+      \field{day}{4}
+      \field{issn}{0896-6273}
+      \field{journaltitle}{Neuron}
+      \field{month}{5}
+      \field{number}{3}
+      \field{shortjournal}{Neuron}
+      \field{title}{Benchmarking Spike Rate Inference in Population Calcium Imaging}
+      \field{urlday}{29}
+      \field{urlmonth}{7}
+      \field{urlyear}{2019}
+      \field{volume}{90}
+      \field{year}{2016}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{471\bibrangedash 482}
+      \range{pages}{12}
+      \verb{doi}
+      \verb 10.1016/j.neuron.2016.04.014
+      \endverb
+      \verb{file}
+      \verb ScienceDirect Full Text PDF:/home/jdehning/Zotero/storage/SBL7GVSU/Theis et al. - 2016 - Benchmarking Spike Rate Inference in Population Ca.pdf:application/pdf;ScienceDirect Snapshot:/home/jdehning/Zotero/storage/IEMVXH82/S0896627316300733.html:text/html
+      \endverb
+      \verb{urlraw}
+      \verb http://www.sciencedirect.com/science/article/pii/S0896627316300733
+      \endverb
+      \verb{url}
+      \verb http://www.sciencedirect.com/science/article/pii/S0896627316300733
+      \endverb
+    \endentry
+    \entry{noauthor_spikefinder_nodate}{online}{}
+      \field{sortinit}{2}
+      \field{sortinithash}{cbff857e587bcb4635511624d773949e}
+      \field{labeltitlesource}{title}
+      \field{abstract}{benchmarking challenge for detecting spikes in imaging data}
+      \field{title}{spikefinder}
+      \field{urlday}{29}
+      \field{urlmonth}{7}
+      \field{urlyear}{2019}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb Snapshot:/home/jdehning/Zotero/storage/K4WGAKBT/spikefinder.codeneuro.org.html:text/html
+      \endverb
+      \verb{urlraw}
+      \verb http://spikefinder.codeneuro.org/
+      \endverb
+      \verb{url}
+      \verb http://spikefinder.codeneuro.org/
+      \endverb
+    \endentry
+    \entry{friedrich_fast_2017}{article}{}
+      \name{author}{3}{}{%
+        {{hash=2b19f9c1ff30f6c5e9bc603917386c94}{%
+           family={Friedrich},
+           familyi={F\bibinitperiod},
+           given={Johannes},
+           giveni={J\bibinitperiod}}}%
+        {{hash=87916486c645254afd5ce106a7809ff7}{%
+           family={Zhou},
+           familyi={Z\bibinitperiod},
+           given={Pengcheng},
+           giveni={P\bibinitperiod}}}%
+        {{hash=b5ff96deb16b77fe4a862b665ba9b0c9}{%
+           family={Paninski},
+           familyi={P\bibinitperiod},
+           given={Liam},
+           giveni={L\bibinitperiod}}}%
+      }
+      \strng{namehash}{2d3471ee59096a7d0b7eeda2ed08604a}
+      \strng{fullhash}{2d3471ee59096a7d0b7eeda2ed08604a}
+      \strng{bibnamehash}{2d3471ee59096a7d0b7eeda2ed08604a}
+      \strng{authorbibnamehash}{2d3471ee59096a7d0b7eeda2ed08604a}
+      \strng{authornamehash}{2d3471ee59096a7d0b7eeda2ed08604a}
+      \strng{authorfullhash}{2d3471ee59096a7d0b7eeda2ed08604a}
+      \field{sortinit}{3}
+      \field{sortinithash}{a4b52e5432884761f50fb9571273b93e}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Fluorescent calcium indicators are a popular means for observing the spiking activity of large neuronal populations, but extracting the activity of each neuron from raw fluorescence calcium imaging data is a nontrivial problem. We present a fast online active set method to solve this sparse non-negative deconvolution problem. Importantly, the algorithm 3progresses through each time series sequentially from beginning to end, thus enabling real-time online estimation of neural activity during the imaging session. Our algorithm is a generalization of the pool adjacent violators algorithm ({PAVA}) for isotonic regression and inherits its linear-time computational complexity. We gain remarkable increases in processing speed: more than one order of magnitude compared to currently employed state of the art convex solvers relying on interior point methods. Unlike these approaches, our method can exploit warm starts; therefore optimizing model hyperparameters only requires a handful of passes through the data. A minor modification can further improve the quality of activity inference by imposing a constraint on the minimum spike size. The algorithm enables real-time simultaneous deconvolution of O(105) traces of whole-brain larval zebrafish imaging data on a laptop.}
+      \field{day}{14}
+      \field{issn}{1553-7358}
+      \field{journaltitle}{{PLOS} Computational Biology}
+      \field{langid}{english}
+      \field{month}{3}
+      \field{number}{3}
+      \field{shortjournal}{{PLOS} Computational Biology}
+      \field{title}{Fast online deconvolution of calcium imaging data}
+      \field{urlday}{29}
+      \field{urlmonth}{7}
+      \field{urlyear}{2019}
+      \field{volume}{13}
+      \field{year}{2017}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{e1005423}
+      \range{pages}{-1}
+      \verb{doi}
+      \verb 10.1371/journal.pcbi.1005423
+      \endverb
+      \verb{file}
+      \verb Full Text PDF:/home/jdehning/Zotero/storage/ALBTBQSM/Friedrich et al. - 2017 - Fast online deconvolution of calcium imaging data.pdf:application/pdf;Snapshot:/home/jdehning/Zotero/storage/M64JZBGJ/article.html:text/html
+      \endverb
+      \verb{urlraw}
+      \verb https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005423
+      \endverb
+      \verb{url}
+      \verb https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005423
+      \endverb
+      \keyw{Action potentials,Algorithms,Calcium imaging,Calcium signaling,Fluorescence imaging,Isotonic,Neurons,Optimization}
+    \endentry
+    \entry{pachitariu_robustness_2018}{article}{}
+      \name{author}{3}{}{%
+        {{hash=b32eab169cb7964b639ba0ea170087bd}{%
+           family={Pachitariu},
+           familyi={P\bibinitperiod},
+           given={Marius},
+           giveni={M\bibinitperiod}}}%
+        {{hash=e3c9109623d039d33a01e4e65c8fa52b}{%
+           family={Stringer},
+           familyi={S\bibinitperiod},
+           given={Carsen},
+           giveni={C\bibinitperiod}}}%
+        {{hash=558be022f11dd624c6493e9a9fa9bc26}{%
+           family={Harris},
+           familyi={H\bibinitperiod},
+           given={Kenneth\bibnamedelima D.},
+           giveni={K\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+      }
+      \strng{namehash}{a6280777e75bfc69ca2dc3bd092710e1}
+      \strng{fullhash}{a6280777e75bfc69ca2dc3bd092710e1}
+      \strng{bibnamehash}{a6280777e75bfc69ca2dc3bd092710e1}
+      \strng{authorbibnamehash}{a6280777e75bfc69ca2dc3bd092710e1}
+      \strng{authornamehash}{a6280777e75bfc69ca2dc3bd092710e1}
+      \strng{authorfullhash}{a6280777e75bfc69ca2dc3bd092710e1}
+      \field{sortinit}{4}
+      \field{sortinithash}{11cdaee3b18e01d77f3f428b13c1fc76}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Calcium imaging is a powerful method to record the activity of neural populations in many species, but inferring spike times from calcium signals is a challenging problem. We compared multiple approaches using multiple datasets with ground truth electrophysiology and found that simple non-negative deconvolution ({NND}) outperformed all other algorithms on out-of-sample test data. We introduce a novel benchmark applicable to recordings without electrophysiological ground truth, based on the correlation of responses to two stimulus repeats, and used this to show that unconstrained {NND} also outperformed the other algorithms when run on “zoomed out” datasets of ∼10,000 cell recordings from the visual cortex of mice of either sex. Finally, we show that {NND}-based methods match the performance of a supervised method based on convolutional neural networks while avoiding some of the biases of such methods, and at much faster running times. We therefore recommend that spikes be inferred from calcium traces using simple {NND} because of its simplicity, efficiency, and accuracy. {SIGNIFICANCE} {STATEMENT} The experimental method that currently allows for recordings of the largest numbers of cells simultaneously is two-photon calcium imaging. However, use of this powerful method requires that neuronal firing times be inferred correctly from the large resulting datasets. Previous studies have claimed that complex supervised learning algorithms outperform simple deconvolution methods at this task. Unfortunately, these studies suffered from several problems and biases. When we repeated the analysis, using the same data and correcting these problems, we found that simpler spike inference methods perform better. Even more importantly, we found that supervised learning methods can introduce artifactual structure into spike trains, which can in turn lead to erroneous scientific conclusions. Of the algorithms we evaluated, we found that an extremely simple method performed best in all circumstances tested, was much faster to run, and was insensitive to parameter choices, making incorrect scientific conclusions much less likely.}
+      \field{day}{12}
+      \field{issn}{0270-6474, 1529-2401}
+      \field{journaltitle}{Journal of Neuroscience}
+      \field{langid}{english}
+      \field{month}{9}
+      \field{number}{37}
+      \field{shortjournal}{J. Neurosci.}
+      \field{title}{Robustness of Spike Deconvolution for Neuronal Calcium Imaging}
+      \field{urlday}{29}
+      \field{urlmonth}{7}
+      \field{urlyear}{2019}
+      \field{volume}{38}
+      \field{year}{2018}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{7976\bibrangedash 7985}
+      \range{pages}{10}
+      \verb{doi}
+      \verb 10.1523/JNEUROSCI.3339-17.2018
+      \endverb
+      \verb{file}
+      \verb Full Text PDF:/home/jdehning/Zotero/storage/9M36L4WP/Pachitariu et al. - 2018 - Robustness of Spike Deconvolution for Neuronal Cal.pdf:application/pdf;Snapshot:/home/jdehning/Zotero/storage/CFD2MQDU/7976.html:text/html
+      \endverb
+      \verb{urlraw}
+      \verb https://www.jneurosci.org/content/38/37/7976
+      \endverb
+      \verb{url}
+      \verb https://www.jneurosci.org/content/38/37/7976
+      \endverb
+      \keyw{calcium imaging,spike deconvolution,spike inference}
+    \endentry
+    \entry{pachitariu_suite2p:_2017}{article}{}
+      \name{author}{8}{}{%
+        {{hash=b32eab169cb7964b639ba0ea170087bd}{%
+           family={Pachitariu},
+           familyi={P\bibinitperiod},
+           given={Marius},
+           giveni={M\bibinitperiod}}}%
+        {{hash=e3c9109623d039d33a01e4e65c8fa52b}{%
+           family={Stringer},
+           familyi={S\bibinitperiod},
+           given={Carsen},
+           giveni={C\bibinitperiod}}}%
+        {{hash=fc17361773c1f7b5c948661ae4010e65}{%
+           family={Dipoppa},
+           familyi={D\bibinitperiod},
+           given={Mario},
+           giveni={M\bibinitperiod}}}%
+        {{hash=2140ad17101a10ace99394c5d545e73e}{%
+           family={Schröder},
+           familyi={S\bibinitperiod},
+           given={Sylvia},
+           giveni={S\bibinitperiod}}}%
+        {{hash=91a88aa600fdd12e47de341ebc72f266}{%
+           family={Rossi},
+           familyi={R\bibinitperiod},
+           given={L.\bibnamedelimi Federico},
+           giveni={L\bibinitperiod\bibinitdelim F\bibinitperiod}}}%
+        {{hash=dbfc95705697294d7d4b458d93ecfb93}{%
+           family={Dalgleish},
+           familyi={D\bibinitperiod},
+           given={Henry},
+           giveni={H\bibinitperiod}}}%
+        {{hash=dafd079b7d71e4d0831c3d38be135499}{%
+           family={Carandini},
+           familyi={C\bibinitperiod},
+           given={Matteo},
+           giveni={M\bibinitperiod}}}%
+        {{hash=558be022f11dd624c6493e9a9fa9bc26}{%
+           family={Harris},
+           familyi={H\bibinitperiod},
+           given={Kenneth\bibnamedelima D.},
+           giveni={K\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+      }
+      \strng{namehash}{efd30afe071c3a047cf8bb6528ced488}
+      \strng{fullhash}{7ec586cd7d6fd1dc368620e07eeb92d9}
+      \strng{bibnamehash}{efd30afe071c3a047cf8bb6528ced488}
+      \strng{authorbibnamehash}{efd30afe071c3a047cf8bb6528ced488}
+      \strng{authornamehash}{efd30afe071c3a047cf8bb6528ced488}
+      \strng{authorfullhash}{7ec586cd7d6fd1dc368620e07eeb92d9}
+      \field{sortinit}{5}
+      \field{sortinithash}{3c19c3776b658b3558e9e2e4840c01e2}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{{<}h3{>}Abstract{<}/h3{>} {<}p{>}Two-photon microscopy of calcium-dependent sensors has enabled unprecedented recordings from vast populations of neurons. While the sensors and microscopes have matured over several generations of development, computational methods to process the resulting movies remain inefficient and can give results that are hard to interpret. Here we introduce Suite2p: a fast, accurate and complete pipeline that registers raw movies, detects active cells, extracts their calcium traces and infers their spike times. Suite2p runs on standard workstations, operates faster than real time, and recovers {\textasciitilde}2 times more cells than the previous state-of-the-art method. Its low computational load allows routine detection of {\textasciitilde}10,000 cells simultaneously with standard two-photon resonant-scanning microscopes. Recordings at this scale promise to reveal the fine structure of activity in large populations of neurons or large populations of subcellular structures such as synaptic boutons.{<}/p{>}}
+      \field{day}{20}
+      \field{journaltitle}{{bioRxiv}}
+      \field{langid}{english}
+      \field{month}{7}
+      \field{shorttitle}{Suite2p}
+      \field{title}{Suite2p: beyond 10,000 neurons with standard two-photon microscopy}
+      \field{urlday}{29}
+      \field{urlmonth}{7}
+      \field{urlyear}{2019}
+      \field{year}{2017}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{061507}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1101/061507
+      \endverb
+      \verb{file}
+      \verb Full Text PDF:/home/jdehning/Zotero/storage/V2XLL22E/Pachitariu et al. - 2017 - Suite2p beyond 10,000 neurons with standard two-p.pdf:application/pdf;Snapshot:/home/jdehning/Zotero/storage/BHZSU3UI/061507v2.html:text/html
+      \endverb
+      \verb{urlraw}
+      \verb https://www.biorxiv.org/content/10.1101/061507v2
+      \endverb
+      \verb{url}
+      \verb https://www.biorxiv.org/content/10.1101/061507v2
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
