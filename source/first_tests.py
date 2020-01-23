@@ -10,6 +10,7 @@ from suite2p import dcnv
 from matplotlib import colors
 import matplotlib as mpl
 from scipy.ndimage import gaussian_filter1d
+from help_functions import deconvolve
 
 import mrestimator as mre
 
@@ -146,19 +147,6 @@ def test_deconv():
     plt.tight_layout()
     plt.savefig("../reports/estimating_timescales/figures/packer_example_lin_pil1.pdf")
     plt.show()
-
-def deconvolve(mat, fs, tau = 1.5):
-    #neucoeff = 0.7  # neuropil coefficient
-    # for computing and subtracting baseline
-    baseline = 'maximin'  # take the running max of the running min after smoothing with gaussian
-    sig_baseline = 10.0  # in bins, standard deviation of gaussian with which to smooth
-    win_baseline = 60.0  # in seconds, window in which to compute max/min filters
-
-    ops = {'tau': tau, 'fs': fs, #'neucoeff': neucoeff,
-           'baseline': baseline, 'sig_baseline': sig_baseline, 'win_baseline': win_baseline}
-    # get spikes
-    spks = dcnv.oasis(mat, ops)
-    return spks
 
 
 
@@ -951,231 +939,7 @@ def correlation_spatial_subsampling():
     plt.savefig('../reports/spatial_subsampling/timescales_spatialSubs3.pdf')
     plt.show()
 
-def get_Fc(folder):
-    F = np.load(os.path.join(folder, 'F.npy'))
-    Fneu = np.load(os.path.join(folder, 'Fneu.npy'))
-    Fc = F - 0.7 * Fneu
-    return Fc
 
-def get_cell_nums(folder):
-    iscell = np.load(os.path.join(folder, "iscell.npy"))
-    return np.nonzero(iscell[:,0])
-
-def deconvolve_Fc(Fc, fs, cell_num = None, tau=1.5):
-    """
-    Returns deconvolved calcium signal. Returns 1 dimensional array if cell_num is an integes, otherwise a two dimensional array
-    """
-    if cell_num is None:
-        Fc = Fc
-        output_ind = Ellipsis
-    elif isinstance(cell_num, int):
-        Fc = Fc[cell_num]
-        output_ind = 0
-    else:
-        Fc = Fc[np.newaxis, cell_num]
-        output_ind = Ellipsis
-    deconvolved = deconvolve(Fc, fs, tau=tau)[output_ind]
-    return deconvolved
-
-def fit_tau(act, fs, numboot = 0, k_arr = None):
-    if k_arr is None:
-        k_arr = np.arange(1, fs * 1)
-    coeff_res = mre.coefficients(act, k_arr, dt=1/fs* 1000, numboot=numboot, method='ts')
-    tau_res = mre.fit(coeff_res, fitfunc='exponentialoffset', numboot=numboot)
-    return tau_res.tau
-
-def rolling_sum(x, n_bins, same_length = True):
-    shape_ret = list(x.shape)
-    shape_ret[-1] -= n_bins-1
-    ret = np.zeros(shape_ret)
-    for i in range(n_bins):
-        ret += x[...,i:x.shape[-1] + 1 - n_bins + i]
-    if same_length:
-        shape_to_add = shape_ret
-        shape_to_add[-1] = n_bins-1
-        return np.concatenate([np.zeros(shape_to_add), ret], axis=-1)
-    else:
-        return ret
-
-
-def calc_signal(act, n_bins, nth_largest):
-    """
-    Returns snr of the last axis
-    :param act:
-    :param n_bins:
-    :param nth_largest:
-    :return:
-    """
-    assert len(act.shape) in [1,2]
-    act_roll_sum = rolling_sum(act,n_bins)
-    first_index = Ellipsis if len(act.shape) == 1 else np.arange(act.shape[0])
-    for i in range(nth_largest):
-        i_max = np.argmax(act_roll_sum, axis=-1)
-        max_val = np.copy(act_roll_sum[first_index,i_max])
-        for i_bin in range(-n_bins+1, n_bins):
-            remove_borders_ind = np.min([np.max([np.zeros_like(i_max),i_max+i_bin], axis=0), np.ones_like(i_max)*act.shape[-1]-1], axis=0)
-            act_roll_sum[first_index, remove_borders_ind] -= max_val
-
-    return max_val
-
-def compare_injected_vs_gen():
-    paths = ['/data.nst/share/data/packer_calcium_mice/2019-11-08_RL065/2019-11-08_RL065_t-003/suite2p/plane0',
-             '/home/jdehning/ownCloud/studium/two_photon_imaging/data/Spontaneous/suite2p/plane0',
-             "/data.nst/share/data/packer_calcium_mice/2019-08-15_RL055_t-003",
-             '/data.nst/share/data/packer_calcium_mice/2019-08-14_J059_t-002',
-             '/data.nst/jdehning/packer_data/2019-11-07_J061_t-003/suite2p/plane0']
-    fs_list = [30,30,30,30,15]
-    tau_dcnv = 1.5
-    Fc_list = [get_Fc(path)[get_cell_nums(path)] for path in paths]
-    dcnv_list = [deconvolve_Fc(Fc, fs, tau=tau_dcnv) for Fc, fs in zip(Fc_list, fs_list)]
-    tau_2Dlist = []
-    for act_mat, fs in zip(dcnv_list, fs_list):
-        tau_2Dlist.append([])
-        for act in act_mat:
-            tau = fit_tau(act, fs, k_arr=np.arange(1,70))
-            tau_2Dlist[-1].append(tau)
-    nth_largest_snr = 5
-    n_bins_rolling_sum = 3
-
-    ##Calculate SNR with Jonas' method
-    #nth_largest_list=np.round(np.logspace(np.log10(1),np.log10(100),20)).astype('int')
-    nth_largest_list = [nth_largest_snr]
-    snr_diff_2D_list = []
-    snr_two_periods_list = []
-    for i_exp in range(len(paths)):
-        snr_diff_2D_list.append([])
-        for nth_largest in nth_largest_list:
-            snr_periods = [None, None]
-            for i_period in range(2):
-                Fc_all = Fc_list[i_exp]
-                dcnv_all = dcnv_list[i_exp]
-                Fc = Fc_all[:, Fc_all.shape[1]//2:] if i_period == 0 else Fc_all[:, :Fc_all.shape[1]//2]
-                dcnv = dcnv_all[:, dcnv_all.shape[1]//2:] if i_period == 0 else dcnv_all[:, :dcnv_all.shape[1]//2]
-                snr = calc_signal(dcnv, n_bins_rolling_sum, nth_largest)/np.std(Fc, axis=-1)
-                print(i_exp, nth_largest, snr[1])
-                snr_periods[i_period] = np.array(snr)
-            #if i_exp == 2:
-            #    plt.plot(snr_periods[0], snr_periods[1], '.', alpha=0.4)
-            #print(np.corrcoef(snr_periods[0], snr_periods[1]))
-            #median_diff = np.median(np.abs((snr_periods[1]-snr_periods[0])/snr_periods[0]))
-            median_diff =  np.corrcoef(snr_periods[0], snr_periods[1])[0,1]
-            snr_diff_2D_list[-1].append(median_diff)
-        snr_two_periods_list.append((snr_periods[0], snr_periods[1]))
-
-
-
-    if False:
-        f, axes = plt.subplots(1, 5, figsize = (15,3))
-        titles = ['transgenic: 30 Hz, 30 min (2019-11-08, RL065)', 'transgenic: 30 Hz, 10 min (2019-03-01, RL024)',
-                  'injected: 30 Hz, 26 min (2019-08-15, RL055)', 'injected: 30 Hz, 25 min (2019-08-14, J059)',
-                  'injected: 15 Hz, 30 min (2019-11-07, J061)']
-        for i_ax, ax in enumerate(axes):
-            ax.plot(nth_largest_list, snr_diff_2D_list[i_ax])
-            #ax.set_ylim(0,400)
-            ax.set_xlabel("snr")
-            if i_ax == 0:
-                ax.set_ylabel('median percentual difference of snr\nbetween begin and end of recording')
-            #ax.set_xlim(0,12)
-            ax.set_title(titles[i_ax])
-        plt.show()
-
-
-    snr_2Dlist = []
-
-    range_snr = [[1,1.5],[1.5,2],[2,2.5],[2.5,3], [3,4]]
-    coefficients_list = []
-
-    for Fc_mat, act_mat, tau_mat, i_exp in zip(Fc_list, dcnv_list, tau_2Dlist, range(1000)):
-        snr_2Dlist.append([])
-        i_plot = 0
-        coefficients_list.append([])
-        for i_hist in range(len(range_snr)):
-            coefficients_list[-1].append([])
-        for Fc, act, tau in zip(Fc_mat, act_mat, tau_mat):
-            #l_norm = 10
-            #act_for_snr = act
-            #act_for_snr = np.concatenate([np.sum([act[:-2], act[1:-1], act[2:]], axis=0), [0,0]])
-            #act_for_snr = np.concatenate([np.sum([act[:-1], act[1:]], axis=0), [0]])
-            snr = calc_signal(act, n_bins_rolling_sum, nth_largest_snr) / np.std(Fc)
-            #snr = np.max(act_for_snr)/np.std(Fc)
-            #snr = np.sum(act_for_snr**l_norm)**(1/l_norm)/np.std(Fc)
-            if snr < 2 and snr > 1.5 and i_exp==0 and False:
-                print(snr, tau)
-                fs = fs_list[i_exp]
-                #plt.clf()
-                #f, axes = plt.subplots(2, 1, figsize=(10, 5))
-                #axes[0].plot(Fc)
-                #axes[0].plot(act_for_snr)
-                #amax = np.argmax(act_for_snr)
-                #axes[0].set_xlim(amax-fs*2, amax+fs*5)
-                coefficients.append(mre.coefficients(act, k_arr, dt=1/fs* 1000, numboot=0, method='ts').coefficients)
-                #axes[1].plot(mre.coefficients(act, k_arr, dt=1/fs* 1000, numboot=0, method='ts').coefficients)
-                #input()
-                plt.close()
-            for i_hist, (min_snr, max_snr) in enumerate(range_snr):
-                if snr > min_snr and snr < max_snr:
-                    fs = fs_list[i_exp]
-                    k_arr = np.arange(1, 2*fs)
-                    coefficients_list[-1][i_hist].append(mre.coefficients(act, k_arr, dt=1/fs* 1000, numboot=0, method='ts').coefficients)
-            snr_2Dlist[-1].append(snr)
-
-    #plt.plot(np.mean(np.array(coefficients), axis=0))
-    #plt.show()
-
-
-
-    f, axes = plt.subplots(4, 5, figsize = (18,12))
-    titles = ['transgenic: 30 Hz, 30 min\n(2019-11-08, RL065)', 'transgenic: 30 Hz, 10 min\n(2019-03-01, RL024)',
-              'injected: 30 Hz, 26 min\n(2019-08-15, RL055)', 'injected: 30 Hz, 25 min\n(2019-08-14, J059)',
-              'injected: 15 Hz, 20 min\n(2019-11-07, J061)']
-    for i_ax, ax in enumerate(axes[0]):
-        ax.plot(snr_2Dlist[i_ax], tau_2Dlist[i_ax], '.', alpha=0.3)
-        #ax.hist(snr_2Dlist[i_ax], bins=np.linspace(0,8,30))
-        ax.set_ylim(0,400)
-        ax.set_xlabel("Signal-to-noise ratio")
-        if i_ax == 0:
-            ax.set_ylabel('timescales (ms)')
-        ax.set_xlim(0,6)
-        ax.set_title(titles[i_ax])
-    for i_ax, ax in enumerate(axes[1]):
-        #ax.plot(snr_2Dlist[i_ax], tau_2Dlist[i_ax], '.', alpha=0.3)
-        ax.hist(snr_2Dlist[i_ax], bins=np.linspace(0,8,30))
-        ax.set_ylim(0,200)
-        ax.set_xlabel("Signal-to-noise ratio")
-        if i_ax == 0:
-            ax.set_ylabel('number of cells')
-        ax.set_xlim(0,6)
-    for i_ax, ax in enumerate(axes[2]):
-        #ax.plot(snr_2Dlist[i_ax], tau_2Dlist[i_ax], '.', alpha=0.3)
-        for i_hist, (min_snr, max_snr) in enumerate(range_snr):
-            fs = fs_list[i_ax]
-            k_arr = np.arange(1, 2 * fs)
-            time_arr = k_arr/fs*1000
-            correlation_coeff = np.mean(np.array(coefficients_list[i_ax][i_hist]), axis=0)
-            num_cells = np.array(coefficients_list[i_ax][i_hist]).shape[0]
-            try:
-                ax.plot(time_arr, correlation_coeff,
-                         label = 'cells with SNR between {} and {}\nnumber of cells: {}'.format(min_snr, max_snr, num_cells))
-            except ValueError:
-                continue
-        ax.set_xlabel("Time difference [ms]")
-        ax.legend(fontsize=7)
-        if i_ax == 0:
-            ax.set_ylabel('Average autocorrelation')
-        #ax.set_xlim(0,10)
-    for i_ax, ax in enumerate(axes[3]):
-        snr1 = snr_two_periods_list[i_ax][0]
-        snr2 = snr_two_periods_list[i_ax][1]
-        ax.plot(snr1,snr2, '.', alpha =0.4)
-        ax.set_ylim(0, ax.get_ylim()[1])
-        ax.set_xlim(ax.get_ylim())
-        ax.set_xlabel("SNR first half of recording\nCorrelation coefficient: {:.2f}".format(np.corrcoef(snr1,snr2)[0,1]))
-        ax.plot([0,ax.get_xlim()[1]], [0,ax.get_ylim()[1]], ':' ,color='tab:gray')
-        if i_ax == 0:
-            ax.set_ylabel("SNR second half of recording")
-    plt.tight_layout()
-    plt.savefig('../reports/snr_of_recordings/snr_overview_figure.png', dpi=200)
-    plt.show()
 
 
 
@@ -1191,5 +955,4 @@ if __name__ == "__main__":
     #correlation_different_resolutions4()
     #correlation_different_resolutions5()
     #correlation_spatial_subsampling()
-    compare_injected_vs_gen()
     pass
