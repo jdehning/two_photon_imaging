@@ -2,7 +2,7 @@ import numpy as np
 import os
 
 import mrestimator as mre
-from suite2p import dcnv
+from suite2p.extraction import dcnv
 
 
 
@@ -86,3 +86,18 @@ def calc_signal(act, n_bins, nth_largest):
             act_roll_sum[first_index, remove_borders_ind] -= max_val
 
     return max_val
+
+def calc_snr_mloidolt(dcnv, Fc, framerate, thresh=0.02):
+    print(framerate)
+    print(dcnv.shape)
+    print(Fc.shape)
+    snr = np.zeros(dcnv.shape[0])
+    for i_cells in range(dcnv.shape[0]):
+        spike_starts = np.nonzero(dcnv[i_cells,:]/np.mean(dcnv[i_cells,:] > thresh))[0]
+        spike_ends = spike_starts[:-framerate] + framerate
+        spike_idx = np.hstack([np.arange(s,e) for s,e in zip(spike_starts, spike_ends)])
+        silent_idx = np.setdiff1d(np.arange(dcnv.shape[1]), spike_idx)
+        snr[i_cells] = np.max(Fc[i_cells,:]/np.std(Fc[i_cells,silent_idx]))
+    print(snr.shape)
+    return snr
+
