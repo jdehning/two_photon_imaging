@@ -3,15 +3,15 @@ import os
 import matplotlib.pyplot as plt
 
 import mrestimator as mre
-from help_functions import get_Fc, get_cell_nums, deconvolve_Fc, fit_tau, calc_signal, calc_snr_mloidolt
+from help_functions import get_Fc, get_cell_nums, deconvolve_Fc, fit_tau, calc_signal, calc_snr_mloidolt, calc_skewness_mloidolt, calc_brightness_mloidolt
 
 def compare_injected_vs_gen():
-    paths = ['/data.nst/share/data/packer_calcium_mice/2019-11-08_RL065/2019-11-08_RL065_t-003/suite2p/plane0',
+    paths = [#'/data.nst/share/data/packer_calcium_mice/2019-11-08_RL065/2019-11-08_RL065_t-003/suite2p/plane0',
              #'/data.nst/share/data/packer_calcium_mice/2019-03-01_R024/Spontaneous/suite2p/plane0',
              "/data.nst/share/data/packer_calcium_mice/2019-08-15_RL055_t-003",
              '/data.nst/share/data/packer_calcium_mice/2019-08-14_J059_t-002',
              '/data.nst/jdehning/packer_data/2019-11-07_J061_t-003/suite2p/plane0']
-    fs_list = [30,30,30,15]
+    fs_list = [30,30,15]
     tau_dcnv = 1.5
     Fc_list = [get_Fc(path)[get_cell_nums(path)] for path in paths]
     dcnv_list = [deconvolve_Fc(Fc, fs, tau=tau_dcnv) for Fc, fs in zip(Fc_list, fs_list)]
@@ -38,7 +38,7 @@ def compare_injected_vs_gen():
                 dcnv_all = dcnv_list[i_exp]
                 Fc = Fc_all[:, Fc_all.shape[1]//2:] if i_period == 0 else Fc_all[:, :Fc_all.shape[1]//2]
                 dcnv = dcnv_all[:, dcnv_all.shape[1]//2:] if i_period == 0 else dcnv_all[:, :dcnv_all.shape[1]//2]
-                snr = calc_snr_mloidolt(dcnv, Fc, fs_list[i_exp])
+                snr = calc_brightness_mloidolt(dcnv, Fc, fs_list[i_exp])
                 snr_periods[i_period] = np.array(snr)
                 
                 #snr = calc_signal(dcnv, n_bins_rolling_sum, nth_largest)/np.std(Fc, axis=-1)
@@ -53,10 +53,11 @@ def compare_injected_vs_gen():
         snr_two_periods_list.append((snr_periods[0], snr_periods[1]))
 
     if False:
-        f, axes = plt.subplots(1, 5, figsize = (15,3))
-        titles = ['transgenic: 30 Hz, 30 min (2019-11-08, RL065)', 
+        f, axes = plt.subplots(1, 3, figsize = (15,3))
+        titles = [#'transgenic: 30 Hz, 30 min (2019-11-08, RL065)', 
                   #'transgenic: 30 Hz, 10 min (2019-03-01, RL024)',
-                  'injected: 30 Hz, 26 min (2019-08-15, RL055)', 'injected: 30 Hz, 25 min (2019-08-14, J059)',
+                  'injected: 30 Hz, 26 min (2019-08-15, RL055)', 
+                  'injected: 30 Hz, 25 min (2019-08-14, J059)',
                   'injected: 15 Hz, 30 min (2019-11-07, J061)']
         for i_ax, ax in enumerate(axes):
             ax.plot(nth_largest_list, snr_diff_2D_list[i_ax])
@@ -71,7 +72,7 @@ def compare_injected_vs_gen():
 
     snr_2Dlist = []
 
-    range_snr = [[0,7.5],[7.5,10],[10,12.5],[12.5,15], [15,30]]
+    range_snr = [[0,75],[75,100],[100,420],[200,800],[800,2500]]
     coefficients_list = []
 
     for Fc_mat, act_mat, tau_mat, i_exp in zip(Fc_list, dcnv_list, tau_2Dlist, range(1000)):
@@ -87,7 +88,7 @@ def compare_injected_vs_gen():
             print(Fc.shape)
             print(Fc_m.shape)
 
-            snr = calc_snr_mloidolt(dcnv_m, Fc_m, fs_list[i_exp])
+            snr = calc_brightness_mloidolt(dcnv_m, Fc_m, fs_list[i_exp])
             print(snr.shape)
             for i_hist, (min_snr, max_snr) in enumerate(range_snr):
                 if snr > min_snr and snr < max_snr:
@@ -101,10 +102,11 @@ def compare_injected_vs_gen():
 
 
 
-    f, axes = plt.subplots(4, 4, figsize = (18,12))
-    titles = ['transgenic: 30 Hz, 30 min\n(2019-11-08, RL065)', 
-            #'transgenic: 30 Hz, 10 min\n(2019-03-01, RL024)',
-              'injected: 30 Hz, 26 min\n(2019-08-15, RL055)', 'injected: 30 Hz, 25 min\n(2019-08-14, J059)',
+    f, axes = plt.subplots(4, 3, figsize = (18,12))
+    titles = [#'transgenic: 30 Hz, 30 min\n(2019-11-08, RL065)', 
+              #'transgenic: 30 Hz, 10 min\n(2019-03-01, RL024)',
+              'injected: 30 Hz, 26 min\n(2019-08-15, RL055)', 
+              'injected: 30 Hz, 25 min\n(2019-08-14, J059)',
               'injected: 15 Hz, 20 min\n(2019-11-07, J061)']
     for i_ax, ax in enumerate(axes[0]):
         ax.plot(snr_2Dlist[i_ax], tau_2Dlist[i_ax], '.', alpha=0.3)
@@ -113,16 +115,19 @@ def compare_injected_vs_gen():
         ax.set_xlabel("Signal-to-noise ratio")
         if i_ax == 0:
             ax.set_ylabel('timescales (ms)')
-        ax.set_xlim(0,30)
+        #ax.set_xlim(0,30)
         ax.set_title(titles[i_ax])
     for i_ax, ax in enumerate(axes[1]):
         #ax.plot(snr_2Dlist[i_ax], tau_2Dlist[i_ax], '.', alpha=0.3)
         ax.hist(np.asarray(snr_2Dlist[i_ax]).flatten())
+        median_snr = np.median(np.asarray(snr_2Dlist[i_ax]).flatten())
+        ax.axvline(median_snr, label='Median'+str(median_snr))
         #ax.set_ylim(0,200)
+        ax.legend(fontsize=7)
         ax.set_xlabel("Signal-to-noise ratio")
         if i_ax == 0:
             ax.set_ylabel('number of cells')
-        ax.set_xlim(0,30)
+        #ax.set_xlim(0,30)
     for i_ax, ax in enumerate(axes[2]):
         #ax.plot(snr_2Dlist[i_ax], tau_2Dlist[i_ax], '.', alpha=0.3)
         for i_hist, (min_snr, max_snr) in enumerate(range_snr):
@@ -137,7 +142,7 @@ def compare_injected_vs_gen():
             except ValueError:
                 continue
         ax.set_xlabel("Time difference [ms]")
-        ax.legend(fontsize=7)
+        #ax.legend(fontsize=7)
         if i_ax == 0:
             ax.set_ylabel('Average autocorrelation')
         #ax.set_xlim(0,10)
@@ -152,7 +157,7 @@ def compare_injected_vs_gen():
         if i_ax == 0:
             ax.set_ylabel("SNR second half of recording")
     plt.tight_layout()
-    plt.savefig('../reports/snr_of_recordings/snr_mloidolt.pdf')
+    plt.savefig('../reports/snr_of_recordings/bright_mloidolt.pdf')
     plt.show()
 
 if __name__ == '__main__':

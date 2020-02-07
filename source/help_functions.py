@@ -3,7 +3,7 @@ import os
 
 import mrestimator as mre
 from suite2p.extraction import dcnv
-
+import scipy.stats
 
 
 def deconvolve(mat, fs, tau = 1.5):
@@ -87,17 +87,35 @@ def calc_signal(act, n_bins, nth_largest):
 
     return max_val
 
-def calc_snr_mloidolt(dcnv, Fc, framerate, thresh=0.02):
-    print(framerate)
-    print(dcnv.shape)
-    print(Fc.shape)
+def calc_snr_mloidolt(dcnv, Fc, framerate, fluo_thresh=0.02, diff_std_thresh=1):
     snr = np.zeros(dcnv.shape[0])
     for i_cells in range(dcnv.shape[0]):
-        spike_starts = np.nonzero(dcnv[i_cells,:]/np.mean(dcnv[i_cells,:] > thresh))[0]
+        diff_dcnv = np.diff(dcnv[i_cells,:])
+        diff_dcnv_thresh = np.mean(diff_dcnv) + diff_std_thresh * np.std(diff_dcnv)
+
+        diff_spike_starts = np.nonzero(diff_dcnv > diff_dcnv_thresh)[0]
+        fluo_spike_starts = np.nonzero(dcnv[i_cells,:]/np.mean(dcnv[i_cells,:]) > fluo_thresh)[0]
+        
+        spike_starts = np.intersect1d(diff_spike_starts, fluo_spike_starts)
+
         spike_ends = spike_starts[:-framerate] + framerate
-        spike_idx = np.hstack([np.arange(s,e) for s,e in zip(spike_starts, spike_ends)])
-        silent_idx = np.setdiff1d(np.arange(dcnv.shape[1]), spike_idx)
-        snr[i_cells] = np.max(Fc[i_cells,:]/np.std(Fc[i_cells,silent_idx]))
-    print(snr.shape)
+        try:
+            spike_idx = np.hstack([np.arange(s,e) for s,e in zip(spike_starts, spike_ends)])
+            silent_idx = np.setdiff1d(np.arange(dcnv.shape[1]), spike_idx)
+            snr[i_cells] = np.percentile(Fc[i_cells,:],80)/np.std(Fc[i_cells,silent_idx])
+        except:
+            pass
     return snr
+
+def calc_skewness_mloidolt(dcnv, Fc, framerate, fluo_thresh=0.02, diff_std_thresh=1):
+    skew = np.zeros(dcnv.shape[0])
+    for i_cells in range(dcnv.shape[0]):
+        skew[i_cells] = scipy.stats.skew(Fc[i_cells,:])
+    return skew
+
+def calc_brightness_mloidolt(dcnv, Fc, framerate, fluo_thresh=0.02, diff_std_thresh=1):
+    bright = np.zeros(dcnv.shape[0])
+    for i_cells in range(dcnv.shape[0]):
+        bright[i_cells] = np.percentile(Fc[i_cells,:], 20)
+    return bright
 
