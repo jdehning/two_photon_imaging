@@ -95,7 +95,7 @@ def calc_snr_mloidolt(dcnv, Fc, framerate, fluo_thresh=0.02, diff_std_thresh=1):
 
         diff_spike_starts = np.nonzero(diff_dcnv > diff_dcnv_thresh)[0]
         fluo_spike_starts = np.nonzero(dcnv[i_cells,:]/np.mean(dcnv[i_cells,:]) > fluo_thresh)[0]
-        
+
         spike_starts = np.intersect1d(diff_spike_starts, fluo_spike_starts)
 
         spike_ends = spike_starts[:-framerate] + framerate
@@ -118,4 +118,8 @@ def calc_brightness_mloidolt(dcnv, Fc, framerate, fluo_thresh=0.02, diff_std_thr
     for i_cells in range(dcnv.shape[0]):
         bright[i_cells] = np.percentile(Fc[i_cells,:], 20)
     return bright
+
+def calc_snr_jdehning(dcnv, Fc, n_bins_rolling_sum=3, nth_largest=5):
+    snr = calc_signal(dcnv, n_bins_rolling_sum, nth_largest) / np.std(Fc, axis=-1)
+    return snr
 

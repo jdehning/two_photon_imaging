@@ -3,7 +3,8 @@ import os
 import matplotlib.pyplot as plt
 
 import mrestimator as mre
-from help_functions import get_Fc, get_cell_nums, deconvolve_Fc, fit_tau, calc_signal, calc_snr_mloidolt, calc_skewness_mloidolt, calc_brightness_mloidolt
+from help_functions import get_Fc, get_cell_nums, deconvolve_Fc, fit_tau, calc_signal, calc_snr_mloidolt, calc_skewness_mloidolt, calc_brightness_mloidolt,\
+    calc_snr_jdehning
 
 from mpl_toolkits.mplot3d import Axes3D
 
@@ -22,12 +23,12 @@ def check_condition(condition, snr, skew, bright):
     return truth
 
 def compare_injected_vs_gen():
-    paths = [#'/data.nst/share/data/packer_calcium_mice/2019-11-08_RL065/2019-11-08_RL065_t-003/suite2p/plane0',
-             #'/data.nst/share/data/packer_calcium_mice/2019-03-01_R024/Spontaneous/suite2p/plane0',
+    paths = ['/data.nst/share/data/packer_calcium_mice/2019-11-08_RL065/2019-11-08_RL065_t-003/suite2p/plane0',
+             '/data.nst/share/data/packer_calcium_mice/2019-03-01_R024/Spontaneous/suite2p/plane0',
              "/data.nst/share/data/packer_calcium_mice/2019-08-15_RL055_t-003",
              '/data.nst/share/data/packer_calcium_mice/2019-08-14_J059_t-002',
              '/data.nst/jdehning/packer_data/2019-11-07_J061_t-003/suite2p/plane0']
-    fs_list = [30,30,15]
+    fs_list = [30,30, 30,30,15]
     tau_dcnv = 1.5
     Fc_list = [get_Fc(path)[get_cell_nums(path)] for path in paths]
     dcnv_list = [deconvolve_Fc(Fc, fs, tau=tau_dcnv) for Fc, fs in zip(Fc_list, fs_list)]
@@ -45,6 +46,7 @@ def compare_injected_vs_gen():
     nth_largest_list = [nth_largest_snr]
     snr_diff_2D_list = []
     snr_two_periods_list = []
+    s
     for i_exp in range(len(paths)):
         snr_diff_2D_list.append([])
         for nth_largest in nth_largest_list:
@@ -86,7 +88,8 @@ def compare_injected_vs_gen():
         plt.show()
 
 
-    snr_2Dlist = []
+    snr_2Dlist_mloidolt = []
+    snr_2Dlist_jdehning = []
     bright_2Dlist = []
     skew_2Dlist = []
 
@@ -97,7 +100,9 @@ def compare_injected_vs_gen():
     for Fc_mat, act_mat, tau_mat, i_exp in zip(Fc_list, dcnv_list, tau_2Dlist, range(1000)):
         coefficients_list.append([])
 
-        snr_2Dlist.append([])
+        snr_2Dlist_mloidolt.append([])
+        snr_2Dlist_jdehning.append([])
+
         skew_2Dlist.append([])
         bright_2Dlist.append([])
 
@@ -113,8 +118,12 @@ def compare_injected_vs_gen():
             dcnv_m = act.reshape(1, act.shape[0])
             Fc_m = Fc.reshape(1, Fc.shape[0])
             
+            snr = calc_snr_jdehning(dcnv_m, Fc_m, fs_list[i_exp])
+            snr_2Dlist_jdehning[-1].append(snr)
+
             snr = calc_snr_mloidolt(dcnv_m, Fc_m, fs_list[i_exp])
-            snr_2Dlist[-1].append(snr)
+            snr_2Dlist_mloidolt[-1].append(snr)
+
             
             bright = calc_brightness_mloidolt(dcnv_m, Fc_m, fs_list[i_exp])
             bright_2Dlist[-1].append(bright)
@@ -129,7 +138,6 @@ def compare_injected_vs_gen():
                     k_arr = np.arange(1, 2*fs)
                     coefficients_list[-1][i_hist].append(mre.coefficients(act, 
                         k_arr, dt=1/fs* 1000, numboot=0, method='ts').coefficients)
-                print(i_hist) 
 
     #plt.plot(np.mean(np.array(coefficients), axis=0))
     #plt.show()

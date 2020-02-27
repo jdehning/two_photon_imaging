@@ -3,7 +3,7 @@ import os, fnmatch, sys
 import numpy as np
 import matplotlib.pyplot as plt
 from tqdm import tqdm
-from suite2p import dcnv
+#from suite2p import dcnv
 from matplotlib import colors
 import xarray as xr
 import dask
@@ -118,8 +118,9 @@ def save_tiff_to_hdf():
     #client = Client(cluster)
     size_chunk = 500
     path = "/data.nst/share/data/packer_calcium_mice/2019-11-07_J061_t-003"
-    save_dir = os.path.join('/data.nst/jdehning/packer_data',os.path.basename(os.path.normpath(path)))
-    save_name = os.path.basename(os.path.normpath(path))
+    #save_dir = os.path.join('/data.nst/jdehning/packer_data',os.path.basename(os.path.normpath(path)))
+    save_dir = os.path.join('/home/jdehning/ownCloud/studium/two_photon_imaging/data/', os.path.basename(os.path.normpath(path)))
+    save_name = os.path.basename(os.path.normpath(path)) + '_small.hdf5'
     filename = find_file('*.tif', path)
     if len(filename) > 1:
         raise RuntimeError("More than one tif found")
@@ -132,7 +133,7 @@ def save_tiff_to_hdf():
             length = len(reader)
             num_chunks = (length-1)//size_chunk+1
             dask_array = create_dask_array(reader, num_chunks, size_chunk)
-            dask_array = dask_array[:dask_array.shape[0]//2,::,::]
+            dask_array = dask_array[:dask_array.shape[0]//10,::,::]
             dask_array.to_hdf5(os.path.join(save_dir, save_name),'/x')
 
 
