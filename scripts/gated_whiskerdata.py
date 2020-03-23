@@ -133,7 +133,7 @@ def gate_newData_tauSelect():
         tau_select = np.nonzero((tau_2Dlist[i_exp] > fps_cutoff) &
                                 (tau_2Dlist[i_exp] < dcnv_cutoff))[0]
     
-        #tau_select_2Dlist.append(tau_select)
+        tau_select_2Dlist.append(tau_select)
         """
         tau_select_8 = np.nonzero((tau_2Dlist[i_exp] < fps_cutoff) & 
                             (tau_2Dlist[i_exp] < dcnv_cutoff) &
